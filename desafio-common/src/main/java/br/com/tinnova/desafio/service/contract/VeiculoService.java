@@ -10,4 +10,5 @@ public interface VeiculoService {
 	public VeiculoDTO findById(Long id);
 	public void update(VeiculoDTO veiculoDTO, Long id);
 	public void delete(Long id);
+	public List<VeiculoDTO> findByFilters(VeiculoDTO veiculoDTO);
 }

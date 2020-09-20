@@ -78,5 +78,12 @@ public class VeiculoServiceImpl implements VeiculoService {
 			 throw new VeiculoNaoEncontradoException("Veiculo Não Encontrado");
 		}
 	}
+	@Override
+	public List<VeiculoDTO> findByFilters(VeiculoDTO veiculoDTO) {
+		return repository
+				.findByFilters(veiculoDTO).stream()
+		        .map(this::toDTO)
+		        .collect(Collectors.toList());
+	}
 
 }

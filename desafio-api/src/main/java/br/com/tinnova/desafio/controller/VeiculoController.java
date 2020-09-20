@@ -29,8 +29,8 @@ public class VeiculoController {
 	}
 	
 	@GetMapping("/find")
-	public List<VeiculoDTO> find(){
-		return service.findAll();
+	public List<VeiculoDTO> find(VeiculoDTO veiculoDTO){
+		return service.findByFilters(veiculoDTO);
 	}
 	
 	@GetMapping("/{id}")
