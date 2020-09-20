@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.tinnova.desafio.domain.VeiculoModel;
 import br.com.tinnova.desafio.dto.VeiculoDTO;
+import br.com.tinnova.desafio.exception.VeiculoNaoEncontradoException;
 import br.com.tinnova.desafio.repository.VeiculoRepository;
 import br.com.tinnova.desafio.service.contract.VeiculoService;
 import lombok.AllArgsConstructor;
@@ -47,34 +48,34 @@ public class VeiculoServiceImpl implements VeiculoService {
 	@Override
 	public VeiculoDTO findById(Long id) {
 		Optional<VeiculoModel> veiculo = repository.findById(id);
-		VeiculoDTO veiculoDTO = new VeiculoDTO();
-		if (veiculo.isPresent()) {
-			veiculoDTO = toDTO(veiculo.get());
-		}
-		return veiculoDTO;
+		checkExists(veiculo);
+		return toDTO(veiculo.get());
 	}
 
 	@Override
 	public void update(VeiculoDTO veiculoDTO, Long id) {
 		Optional<VeiculoModel> veiculoOpt = repository.findById(id);
-		
-		if (veiculoOpt.isPresent()) {
-			VeiculoModel veiculo = veiculoOpt.get();
-			veiculo.setAno(veiculoDTO.getAno());
-			veiculo.setMarca(veiculoDTO.getMarca());
-			veiculo.setDescricao(veiculoDTO.getDescricao());
-			veiculo.setUpated(LocalDateTime.now());
-			veiculo.setVeiculo(veiculoDTO.getVeiculo());
-			veiculo.setVendido(veiculoDTO.getVendido());
-			repository.save(veiculo);
-		}
+		checkExists(veiculoOpt);
+		VeiculoModel veiculo = veiculoOpt.get();
+		veiculo.setAno(veiculoDTO.getAno());
+		veiculo.setMarca(veiculoDTO.getMarca());
+		veiculo.setDescricao(veiculoDTO.getDescricao());
+		veiculo.setUpated(LocalDateTime.now());
+		veiculo.setVeiculo(veiculoDTO.getVeiculo());
+		veiculo.setVendido(veiculoDTO.getVendido());
+		repository.save(veiculo);
 	}
 
 	@Override
 	public void delete(Long id) {
 		Optional<VeiculoModel> veiculo = repository.findById(id);
-		if (veiculo.isPresent()) {
-			repository.delete(veiculo.get());
+		checkExists(veiculo);
+		repository.delete(veiculo.get());
+	}
+	
+	private void checkExists(Optional<VeiculoModel> veiculo) {
+		if (!veiculo.isPresent()) {
+			 throw new VeiculoNaoEncontradoException("Veiculo Não Encontrado");
 		}
 	}
 

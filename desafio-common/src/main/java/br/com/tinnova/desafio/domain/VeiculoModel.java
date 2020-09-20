@@ -14,7 +14,7 @@ import lombok.Data;
 public class VeiculoModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String id;
+	private Long id;
 	private String veiculo;
 	private String marca;
 	private Integer ano;
