@@ -33,7 +33,7 @@ public class VeiculoServiceImpl implements VeiculoService {
 	public void create(VeiculoDTO veiculoDTO) {
 		VeiculoModel veiculo = fromDTO(veiculoDTO);
 		veiculo.setCreated(LocalDateTime.now());
-		veiculo.setUpated(LocalDateTime.now());
+		veiculo.setUpdated(LocalDateTime.now());
 		repository.save(veiculo);
 	}
 
@@ -56,13 +56,8 @@ public class VeiculoServiceImpl implements VeiculoService {
 	public void update(VeiculoDTO veiculoDTO, Long id) {
 		Optional<VeiculoModel> veiculoOpt = repository.findById(id);
 		checkExists(veiculoOpt);
-		VeiculoModel veiculo = veiculoOpt.get();
-		veiculo.setAno(veiculoDTO.getAno());
-		veiculo.setMarca(veiculoDTO.getMarca());
-		veiculo.setDescricao(veiculoDTO.getDescricao());
-		veiculo.setUpated(LocalDateTime.now());
-		veiculo.setVeiculo(veiculoDTO.getVeiculo());
-		veiculo.setVendido(veiculoDTO.getVendido());
+		VeiculoModel veiculo = fromDTO(veiculoDTO);
+		veiculo.setUpdated(LocalDateTime.now());
 		repository.save(veiculo);
 	}
 

@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import lombok.Data;
 
 @Data
-@Entity
+@Entity(name = "tb_veiculo")
 public class VeiculoModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +21,6 @@ public class VeiculoModel {
 	private String descricao;
 	private Boolean vendido;
 	private LocalDateTime created;
-	private LocalDateTime upated;
+	private LocalDateTime updated;
 }
 

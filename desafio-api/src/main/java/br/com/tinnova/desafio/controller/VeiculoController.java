@@ -24,16 +24,19 @@ public class VeiculoController {
 	private VeiculoService service;
 	
 	@GetMapping
+	@ResponseStatus(value = HttpStatus.OK)
 	public List<VeiculoDTO> findAll(){
 		return service.findAll();
 	}
 	
 	@GetMapping("/find")
+	@ResponseStatus(value = HttpStatus.OK)
 	public List<VeiculoDTO> find(VeiculoDTO veiculoDTO){
 		return service.findByFilters(veiculoDTO);
 	}
 	
 	@GetMapping("/{id}")
+	@ResponseStatus(value = HttpStatus.OK)
 	public VeiculoDTO findById(@PathVariable Long id) {
 		return service.findById(id);
 	}
@@ -45,11 +48,13 @@ public class VeiculoController {
 	}
 	
 	@PatchMapping("/{id}")
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void update(@PathVariable Long id, @RequestBody VeiculoDTO veiculoDTO) {
 		service.update(veiculoDTO, id);
 	}
 	
 	@DeleteMapping("/{id}")
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) {
 		service.delete(id);
 	}
