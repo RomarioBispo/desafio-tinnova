@@ -3,51 +3,33 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.4.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>br.com.tinnova</groupId>
+		<artifactId>desafio</artifactId>
+		<version>1.0</version>
 	</parent>
-	<groupId>br.com.tinnova</groupId>
-	<artifactId>desafio</artifactId>
-	<version>1.0</version>
-	<name>desafio</name>
-	<description>Demo project for Spring Boot</description>
+	<artifactId>desafio-api</artifactId>
+	<name>desafio-api</name>
 
 	<properties>
 		<java.version>11</java.version>
 	</properties>
 
-	<packaging>pom</packaging>
-	<modules>
-		<module>desafio-exercicio</module>
-		<module>desafio-api</module>
-		<module>desafio-common</module>
-	</modules>
-	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
-			<optional>true</optional>
 		</dependency>
+<!-- 		module dependencies -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
+			<groupId>br.com.tinnova</groupId>
+			<artifactId>desafio-common</artifactId>
+			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -69,4 +51,5 @@
 			</plugin>
 		</plugins>
 	</build>
+
 </project>
