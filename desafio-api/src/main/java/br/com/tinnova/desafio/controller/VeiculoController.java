@@ -3,6 +3,7 @@ package br.com.tinnova.desafio.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -20,6 +21,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("/veiculos")
 @AllArgsConstructor
+@CrossOrigin
 public class VeiculoController {
 	private VeiculoService service;
 	
@@ -33,6 +35,18 @@ public class VeiculoController {
 	@ResponseStatus(value = HttpStatus.OK)
 	public List<VeiculoDTO> find(VeiculoDTO veiculoDTO){
 		return service.findByFilters(veiculoDTO);
+	}
+	
+	@GetMapping("/find/marca")
+	@ResponseStatus(value = HttpStatus.OK)
+	public List<VeiculoDTO> findbyMarca(){
+		return service.findByMarca();
+	}
+	
+	@GetMapping("/find/ano")
+	@ResponseStatus(value = HttpStatus.OK)
+	public List<VeiculoDTO> findbyAno(){
+		return service.findByAno();
 	}
 	
 	@GetMapping("/{id}")

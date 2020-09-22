@@ -1,5 +1,6 @@
 package br.com.tinnova.desafio.repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,9 +44,59 @@ public class CustomVeiculoRepositoryImpl implements CustomVeiculoRepository{
 		    if (veiculoDTO.getVeiculo() != null) {
 		        predicates.add(cb.equal(veiculo.get("veiculo"), veiculoDTO.getVeiculo()));
 		    }
+		    if (veiculoDTO.getCreatedLastWeek() !=null) {
+		    	predicates.add(cb.between(veiculo.get("created"), LocalDateTime.now().minusWeeks(1), LocalDateTime.now()));
+		    }
 		   
 		    cq.where(predicates.toArray(new Predicate[0]));
 		    return em.createQuery(cq).getResultList();
+	}
+	
+	@Override
+	public List<VeiculoDTO> findByMarca() {
+		CriteriaBuilder cbSub = em.getCriteriaBuilder();
+    	
+		CriteriaQuery<Object[]> cqSub = cbSub.createQuery(Object[].class);
+		Root<VeiculoModel> v = cqSub.from(VeiculoModel.class);
+
+		cqSub
+		.multiselect(v.get("marca"), cbSub.count(v.get("marca")))
+		.groupBy(v.get("marca"));
+
+		List<Object[]> objs = em.createQuery(cqSub).getResultList();
+		List<VeiculoDTO> veiculos = new ArrayList<>();
+		
+		for (Object[] obj: objs) {
+			VeiculoDTO veiculo = new VeiculoDTO ();
+			veiculo.setMarca(obj[0].toString());
+			veiculo.setQuantidadeVeiculos(Long.valueOf(obj[1].toString()));
+			veiculos.add(veiculo);
+		}
+		return veiculos;
+	}
+	
+	@Override
+	public List<VeiculoDTO> findByAno() {
+		CriteriaBuilder cbSub = em.getCriteriaBuilder();
+
+		CriteriaQuery<Object[]> cqSub = cbSub.createQuery(Object[].class);
+		Root<VeiculoModel> v = cqSub.from(VeiculoModel.class);
+		
+		cqSub
+		.multiselect(v.get("ano"), cbSub.count(v.get("veiculo")))
+		.groupBy(v.get("ano"));
+
+		List<Object[]> objs = em.createQuery(cqSub).getResultList();
+		
+		List<VeiculoDTO> veiculos = new ArrayList<>();
+
+		for (Object[] obj : objs) {
+			VeiculoDTO veiculo = new VeiculoDTO();
+			veiculo.setAno(Integer.parseInt(obj[0].toString()));
+			veiculo.setQuantidadeVeiculos(Long.valueOf(obj[1].toString()));
+			veiculos.add(veiculo);
+		}
+		return veiculos;
 	}
 
 }
